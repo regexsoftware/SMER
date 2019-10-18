@@ -271,7 +271,7 @@
                 
                 <form class="form" method="post" style="z-index: 999;">
                     {% csrf_token %}
-                    <input type="number" name="number" required max="9999999999" min="1000000000" placeholder="Contact Number">
+                    <input type="number" name="number" autofocus="true" required max="9999999999" min="1000000000" placeholder="Contact Number">
                     <a href="/forgot" class="text-info" >Forgot Password?</a><br>
                     <button type="submit" class="mt-2" id="login-button">Send Verification Code</button>
                 <!-- <div class="g-signin2" data-onsuccess="onSignIn">Sign In</div> -->

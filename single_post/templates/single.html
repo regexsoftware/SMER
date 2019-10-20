@@ -22,8 +22,8 @@
   <link href="/static/assets/demo/demo.css" rel="stylesheet" />
 
   <!-- for cards select -->
-  <!-- <link rel="stylesheet" href="cards.css">
-  <script src="{% static 'cards.js' %}"></script> -->
+  <link rel="stylesheet" href="/static/assets/cards.css">
+  <script src="/static/assets/cards.js"></script>
   <!-- for cards select -->
 </head>
 
@@ -109,18 +109,19 @@
               <!-- <p class="card-category">This is Map</p> -->
             </div>
             <div class="card-body">
-              <form>
+              <form method="POST" action="{% url 'get_single' %}">
+                {% csrf_token %}
                 <div class="row">
                   <div class="col-md-3">
                     <div class="form-group">
                       <label class="bmd-label-floating">From :- </label>
-                      <input type="text" class="form-control" disabled>
+                      <input type="text" name="From" class="form-control">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="bmd-label-floating">To :-</label>
-                      <input type="text" class="form-control">
+                      <input type="text" name="To" class="form-control">
                     </div>
                   </div>
                   <button type="submit" class="btn btn-dark btn-round btn-just-icon">
@@ -131,13 +132,12 @@
                   <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1"
                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">FOR : </button>
-                    <div class="dropdown-menu dropdown-primary">
-                      <a class="dropdown-item" href="#">ME</a>
-                      <a class="dropdown-item" href="#">OTHERS</a>
-                    </div>
+                    <select class="dropdown-menu dropdown-primary" name="For">
+                      <option class="dropdown-item" href="#">Me</option>
+                      <option class="dropdown-item" href="#">Others</option> 
+                    </select>
                   </div>
-
-                </div>
+              </div>
 
                 <!-- google map here -->
                 <div id="map"></div>
@@ -146,7 +146,7 @@
                   function initMap() {
                     map = new google.maps.Map(document.getElementById('map'), {
                       center: { lat: -34.397, lng: 150.644 },
-                      zoom: 6
+                      zoom: 18
                     });
                     infoWindow = new google.maps.InfoWindow;
 
@@ -181,188 +181,102 @@
                   }
                 </script>
                 <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" async defer></script>
-              </form>
+              
             </div>
           </div>
 
-          <div class="row">
-   
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="c1">
-                      <div class="card card-stats">
-                          <div class="card-header card-header-warning card-header-icon">
-                            <div class="card-icon">
-                              <i class="fa fa-bicycle"></i>
-                            </div>
-                            <p style="margin:15px; color: black" class="card-category">
-                              <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample">
-                                <label class="custom-control-label" for="defaultInline1">Cycle</label>
-                              </div>
-                            </p>
-                            <!-- <h3 class="card-title">49/50
-                              <small>GB</small>
-                            </h3> -->
-                            
-                          </div>
-                          
-                        </div>
-                    </div>
+          <div class="cc-selector">
+              <div class="row">
+                <div class="col-sm" style="background-color:crimson;border-radius: 4px;">
+                  <h5 style="color: ivory;"><strong> Cycle</strong></h5>
+                    <input id="cycle" type="radio" name="vehicle" value="cycle" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label class="drinkcard-cc cycle" for="cycle"></label>
                 </div>
-                    
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="c1">
-                        <div class="card card-stats">
-                            <div class="card-header card-header-success card-header-icon">
-                              <div class="card-icon">
-                                <i class="fa fa-motorcycle"></i>
-                              </div>
-                              <p style="margin:15px; color: black" class="card-category">
-                                <div class="custom-control custom-radio custom-control-inline">
-                                  <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample">
-                                  <label class="custom-control-label" for="defaultInline1">Bike</label>
-                                </div>
-                              </p>
-                              <!-- <h3 class="card-title">$34,245</h3> -->
-                            </div>
-                          </div>
-                    </div>
+                &nbsp;
+                <div class="col-sm" style="background-color: darkcyan;border-radius: 4px;">
+                    <h5 style="color: ivory;"><strong> Bike</strong></h5>
+                    <input id="bike" type="radio" name="vehicle" value="bike" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label class="drinkcard-cc bike"for="bike"></label>
                 </div>
-                    
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="c1">
-                      
-                      <div class="card card-stats">
-                          <div class="card-header card-header-danger card-header-icon">
-                            <div class="card-icon">
-                              <i class="fa fa-motorcycle"></i>
-                            </div>
-                            <p style="margin:15px; color: black" class="card-category">
-                              <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample">
-                                <label class="custom-control-label" for="defaultInline1">Share Bike</label>
-                              </div>
-                            </p>
-                            <!-- <h3 class="card-title">75</h3> -->
-                          </div>
-                        </div>
-                    </div>
+                &nbsp;
+                <div class="col-sm" style="background-color: darkmagenta;border-radius: 4px;">
+                    <h5 style="color: ivory;"><strong> Share Bike</strong></h5>
+                    <input id="share-bike" type="radio" name="vehicle" value="share-bike" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label class="drinkcard-cc share-bike" for="share-bike"></label>
                 </div>
-            
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="c1">
-                        
-                        <div class="card card-stats">
-                            <div class="card-header card-header-info card-header-icon">
-                              <div class="card-icon">
-                                <i class="fa fa-car"></i>
-                              </div>
-                              <p style="margin:15px; color: black" class="card-category">
-                                <div class="custom-control custom-radio custom-control-inline">
-                                  <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample">
-                                  <label class="custom-control-label" for="defaultInline1">Share Auto</label>
-                                </div>
-                              </p>
-                              <!-- <h3 class="card-title">+245</h3> -->
-                            </div>
-                          </div>
-                      </div>
-                  </div>
-            
-                    
-                  
+                &nbsp;  
+                <div class="col-sm" style="background-color: hotpink;border-radius: 4px;">
+                    <h5 style="color: ivory;"><strong> Share Auto</strong></h5>
+                    <input id="share-auto" type="radio" name="vehicle" value="share-auto" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label class="drinkcard-cc share-auto"for="share-auto"></label>
+                </div>
+              </div>    
             </div>
             
 
           <div class="card">
             <div class="card-body" style="min-height: 200px">
-              <div class="row">
-                <div class="col-sm">
-                  <!--Dropdown primary-->
-                  <div class="dropdown">
-
-                    <!--Trigger-->
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Type Of Delivery</button>
-
-                    <!--Menu-->
-                    <div class="dropdown-menu dropdown-primary">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
+                <div class="row">
+                    <div class="col-sm">
+                      <span class="custom-dropdown">
+                        <select>
+                            <option  hidden>Type Of Delivery</option>
+                            <option>The Great Gatsby</option>  
+                            <option>V for Vendetta</option>
+                            <option>The Wolf of Wallstreet</option>
+                            <option>Quantum of Solace</option>
+                        </select>
+                    </span>
+                    </div>
+    
+                    
+                    <div class="col-sm">
+                      <span class="custom-dropdown">
+                        <select>
+                            <option  hidden>Weight Rate Cord</option>
+                            <option>The Great Gatsby</option>  
+                            <option>V for Vendetta</option>
+                            <option>The Wolf of Wallstreet</option>
+                            <option>Quantum of Solace</option>
+                        </select>
+                    </span>
+                    </div>
+                    
+                    <div class="col-sm">
+                      <span class="custom-dropdown">
+                        <select>
+                            <option  hidden>Weight Rate Cord</option>
+                            <option>The Great Gatsby</option>  
+                            <option>V for Vendetta</option>
+                            <option>The Wolf of Wallstreet</option>
+                            <option>Quantum of Solace</option>
+                        </select>
+                    </span>
+                    </div>
+                    <div class="col-sm">
+                      <span class="custom-dropdown">
+                        <select>
+                            <option  hidden>Weight Rate Cord</option>
+                            <option>The Great Gatsby</option>  
+                            <option>V for Vendetta</option>
+                            <option>The Wolf of Wallstreet</option>
+                            <option>Quantum of Solace</option>
+                        </select>
+                    </span>
                     </div>
                   </div>
-                  <!--/Dropdown primary-->
-                </div>
-                <div class="col-sm">
-                  <!--Dropdown primary-->
-                  <div class="dropdown">
-
-                    <!--Trigger-->
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Weight Rate Cord</button>
-
-                    <!--Menu-->
-                    <div class="dropdown-menu dropdown-primary">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
-                  <!--/Dropdown primary-->
-                </div>
-
-                <div class="col-sm">
-                  <!--Dropdown primary-->
-                  <div class="dropdown">
-
-                    <!--Trigger-->
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Weight Rate Cord</button>
-
-                    <!--Menu-->
-                    <div class="dropdown-menu dropdown-primary">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
-                  <!--/Dropdown primary-->
-                </div>
-                <div class="col-sm">
-                  <!--Dropdown primary-->
-                  <div class="dropdown">
-
-                    <!--Trigger-->
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Weight Rate Cord</button>
-
-                    <!--Menu-->
-                    <div class="dropdown-menu dropdown-primary">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
-                  <!--/Dropdown primary-->
-                </div>
-              </div>
 
               <div class="row">
                 <div class="col-sm">
                   <div class="form-group">
                     <label class="bmd-label-floating">Pin No. :- </label>
-                    <input type="text" class="form-control">
+                    <input type="text" name="Pin No" required  class="form-control">
                   </div>
                 </div>
                 <div class="col-sm">
                   <div class="form-group">
                     <label class="bmd-label-floating">Full Name :- </label>
-                    <input type="text" class="form-control">
+                    <input type="text" name="Full Name" required class="form-control">
                   </div>
                 </div>
               </div>
@@ -371,27 +285,13 @@
                 <div class="col-sm">
                   <div class="form-group">
                     <label class="bmd-label-floating">Mobile No. :- </label>
-                    <input type="text" class="form-control">
+                    <input type="text" name="Mobile No" required class="form-control">
                   </div>
                 </div>
                 <div class="col-sm">
                   <div class="form-group">
                     <label class="bmd-label-floating">Flat No. + Building Name :- </label>
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Pin No. :- </label>
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
-                <div class="col-sm">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Full Name :- </label>
-                    <input type="text" class="form-control">
+                    <input type="text" name="Flat-No" required class="form-control">
                   </div>
                 </div>
               </div>
@@ -399,13 +299,13 @@
                 <div class="col-sm">
                   <div class="form-group">
                     <label class="bmd-label-floating">Area :- </label>
-                    <input type="text" class="form-control">
+                    <input type="text" name="Area" required class="form-control">
                   </div>
                 </div>
                 <div class="col-sm">
                   <div class="form-group">
                     <label class="bmd-label-floating">Land Mark :- </label>
-                    <input type="text" class="form-control">
+                    <input type="text" name="Land Mark" required class="form-control">
                   </div>
                 </div>
               </div>
@@ -413,13 +313,13 @@
                 <div class="col-sm">
                   <div class="form-group">
                     <label class="bmd-label-floating">City :- </label>
-                    <input type="text" class="form-control">
+                    <input type="text" name="City" required class="form-control">
                   </div>
                 </div>
                 <div class="col-sm">
                   <div class="form-group">
                     <label class="bmd-label-floating">State :- </label>
-                    <input type="text" class="form-control">
+                    <input type="text" name="State" required class="form-control">
                   </div>
                 </div>
               </div>
@@ -429,6 +329,7 @@
           </div>
         </div>
       </div>
+    </form>
       <footer class="footer">
         <div class="container-fluid">
           <nav class="float-left">

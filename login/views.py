@@ -38,6 +38,5 @@ def verify_otp(request):
         })
     return render(request,'confirm_otp.html')
 
-
 def forgot_view(request):
     return render(request,'forgot_pass.html')

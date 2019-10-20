@@ -1,9 +1,10 @@
 from django.db import models
 
 DropOffto = (
-    ("watchman", "watchman"),
-    ("Padosi", "Padosi"),
-    ("mailbox", "mailbox"),
+    ("Security Guard", "Security Guard"),
+    ("MailBox", "MailBox"),
+    ("Neighbour", "Neighbour"),
+    ("Any of the above", "Any of the above"),
     
 )
 
@@ -11,13 +12,11 @@ DropOffto = (
 weightrate = (
     ("10", "10"),
     ("20", "20"),
-    
 )
 
 Postal_rate = (
     ("10", "10"),
     ("20", "20"),
-    
 )
 
 typeofdel = (
@@ -41,7 +40,7 @@ class Single_Order(models.Model):
     weightrate = models.CharField(max_length=255, choices=weightrate)
     Describe_del = models.CharField(max_length=255)
     City = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True)
+    #slug = models.SlugField(unique=True)
     #Image = models.FileField(upload_to='products/images/', null= True)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
